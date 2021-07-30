@@ -26,13 +26,16 @@ const Output = ({ searchQuery }) => {
     if (searchQuery.length > 0) {
       setQuery(searchQuery);
     } else {
-      console.log("invalid search query");
+      console.log("empty");
+      setCity("");
+      setCountry("");
+      setFetchList([]);
     }
   }, [searchQuery]);
 
   useEffect(() => {
     if (query) {
-        console.log("fetching data");
+      console.log("fetching data");
       let queryParts = {
         base: "https://api.openweathermap.org/data/2.5/forecast?q=",
         units: "metric",
@@ -58,13 +61,9 @@ const Output = ({ searchQuery }) => {
           });
       }
     } else {
-        console.log('no search executed');
+      console.log("no search executed");
     }
   }, [query]);
-
-  useEffect(() => {
-      // FIX LIST USEEFFECT
-  }, [fetchList]);
 
   return (
     <div className="test">
@@ -73,7 +72,25 @@ const Output = ({ searchQuery }) => {
           <div>
             <h1>{city + ", " + country}</h1>
           </div>
-          <div></div>
+          <div>
+            {fetchList.length &&
+              fetchList.map((item) => {
+                return (
+                  <p key={item.dt}>
+                    {" "}
+                    {new Date(item.dt * 1000).getDate() +
+                      " / " +
+                      months[new Date(item.dt * 1000).getMonth()] +
+                      " at " +
+                      (new Date(item.dt * 1000).getHours() + 1) +
+                      ":00 " +
+                      Math.round(item.main.temp) +
+                      "°C " +
+                      item.weather[0].description}
+                  </p>
+                );
+              })}
+          </div>
         </div>
       )}
     </div>

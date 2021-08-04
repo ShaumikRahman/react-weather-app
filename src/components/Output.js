@@ -1,10 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 const Output = ({ searchQuery }) => {
-  const [query, setQuery] = useState(searchQuery);
+  const [query, setQuery] = useState('');
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
   const [fetchList, setFetchList] = useState([]);
+  const [error, setError] = useState(false);
 
   const months = [
     "January",
@@ -22,11 +23,13 @@ const Output = ({ searchQuery }) => {
   ];
 
   useEffect(() => {
-    console.log("search query recieved");
     if (searchQuery.length > 0) {
+      console.log("search query recieved");
       setQuery(searchQuery);
+      console.log(searchQuery);
     } else {
-      console.log("empty");
+      console.log("empty"); 
+      setQuery("");
       setCity("");
       setCountry("");
       setFetchList([]);
@@ -54,10 +57,18 @@ const Output = ({ searchQuery }) => {
         fetch(forecast)
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
-            setCity(data.city.name);
-            setCountry(data.city.country);
-            setFetchList(data.list);
+            if (data.cod !== "404") {
+              console.log(data);
+              setError(false);
+              setCity(data.city.name);
+              setCountry(data.city.country);
+              setFetchList(data.list);
+            } else {
+              setError(true);
+              setCity("");
+              setCountry("");
+              setFetchList([]);
+            }
           });
       }
     } else {
@@ -66,28 +77,41 @@ const Output = ({ searchQuery }) => {
   }, [query]);
 
   return (
-    <div className="test">
+    <div className="app__output">
+      {error && (
+        <div className="errorContainer">
+          <h1>Invalid input</h1>
+        </div>
+      )}
       {city && (
-        <div>
-          <div>
+        <div className="outputContainer">
+          <div className="outputContainer__title">
             <h1>{city + ", " + country}</h1>
           </div>
-          <div>
-            {fetchList.length &&
+          <div className="outputContainer__list">
+            {fetchList &&
               fetchList.map((item) => {
                 return (
-                  <p key={item.dt}>
-                    {" "}
-                    {new Date(item.dt * 1000).getDate() +
-                      " / " +
-                      months[new Date(item.dt * 1000).getMonth()] +
-                      " at " +
-                      (new Date(item.dt * 1000).getHours() + 1) +
-                      ":00 " +
-                      Math.round(item.main.temp) +
-                      "°C " +
-                      item.weather[0].description}
-                  </p>
+                  <div key={item.dt} className="weatherItem">
+                    <p className="weatherItem__text">
+                      {" "}
+                      {new Date(item.dt * 1000).getDate() +
+                        " / " +
+                        months[new Date(item.dt * 1000).getMonth()] +
+                        " / " +
+                        (new Date(item.dt * 1000).getHours() + 1) +
+                        ":00 " +
+                        Math.round(item.main.temp) +
+                        "°C " +
+                        item.weather[0].description}{" "}
+                    </p>
+                    <div
+                      className="weatherItem__img"
+                      style={{
+                        backgroundImage: `url('http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png')`,
+                      }}
+                    ></div>
+                  </div>
                 );
               })}
           </div>

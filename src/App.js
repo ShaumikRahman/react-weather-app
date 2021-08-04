@@ -6,7 +6,8 @@ function App() {
   const [query, setQuery] = useState('');
 
   return (
-    <div className="App">
+    <div className="app">
+      <h1 className="app__title">5 Day Weather</h1>
       <Search handleQuery={(q) => {setQuery(q)}}/>
       <Output searchQuery={query}/>
     </div>  

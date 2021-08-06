@@ -21,6 +21,7 @@ const Output = ({ searchQuery }) => {
     "November",
     "December",
   ];
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
   useEffect(() => {
     if (searchQuery.length > 0) {
@@ -95,7 +96,8 @@ const Output = ({ searchQuery }) => {
                   <div key={item.dt} className="weatherItem">
                     <p className="weatherItem__text">
                       {" "}
-                      {new Date(item.dt * 1000).getDate() +
+                      {days[new Date(item.dt * 1000).getDay()] + ' ' +
+                      new Date(item.dt * 1000).getDate() +
                         " / " +
                         months[new Date(item.dt * 1000).getMonth()] +
                         " / " +
@@ -108,7 +110,7 @@ const Output = ({ searchQuery }) => {
                     <div
                       className="weatherItem__img"
                       style={{
-                        backgroundImage: `url('http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png')`,
+                        backgroundImage: `url('http://openweathermap.org/img/wn/${item.weather[0].icon}@4x.png')`,
                       }}
                     ></div>
                   </div>

@@ -6,7 +6,7 @@ import Footer from "./components/Footer";
 
 function App() {
   const [query, setQuery] = useState('');
-  const [forecast, setForecast] = useState(true);
+  const [forecast, setForecast] = useState(false);
 
   function toggle() {
     setForecast(!forecast);

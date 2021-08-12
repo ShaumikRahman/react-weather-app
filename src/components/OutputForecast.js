@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const Output = ({ searchQuery }) => {
+const OutputForecast = ({ searchQuery }) => {
   const [query, setQuery] = useState('');
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
@@ -123,4 +123,4 @@ const Output = ({ searchQuery }) => {
   );
 };
 
-export default Output;
+export default OutputForecast;

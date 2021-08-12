@@ -1,4 +1,8 @@
-const Search = ({ handleQuery }) => {
+import FormButtonsContainer from "./FormButtonsContainer";
+
+
+const Search = ({ handleQuery, toggle }) => {
+
   const validate = (e) => {
     e.preventDefault();
     let query = e.target[0].value.trim();
@@ -26,14 +30,7 @@ const Search = ({ handleQuery }) => {
             className="formInputContainer__input"
           />
         </div>
-        <div className="formButtonsContainer">
-          <button type="reset" className="formButtonsContainer__clear">
-          &#10006;
-          </button>
-          <button type="submit" className="formButtonsContainer__submit">
-          &#10004;
-          </button>
-        </div>
+        <FormButtonsContainer toggle={toggle} />
       </form>
     </div>
   );

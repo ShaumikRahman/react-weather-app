@@ -67,6 +67,10 @@ body::-webkit-scrollbar {
           color: black;
         }
 
+        &__switch {
+          background-color: #ffffff;
+        }
+
         &__clear {
           background-color: #ff7676;
         }
@@ -125,7 +129,7 @@ body::-webkit-scrollbar {
 
           &__img {
               margin-top: 0.75rem;
-            width: 6rem;
+            width: 7rem;
             height: 3rem;
             background-size: cover;
             background-repeat: no-repeat;
@@ -137,6 +141,26 @@ body::-webkit-scrollbar {
         div:nth-child(odd) {
           background-color: #3b3e67;
         }
+      }
+
+      &__main {
+        display: flex;
+        .temp {
+          font-size: 300%;
+        }
+
+        .icon {
+            width: 6rem;
+            height: 3rem;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            vertical-align: middle;
+        }
+      }
+
+      &__extra {
+        display: flex;
       }
     }
   }
